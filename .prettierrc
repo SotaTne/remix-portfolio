@@ -1,0 +1,10 @@
+{
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-organize-imports"],
+  "tailwindFunctions": ["clsx"],
+  "trailingComma": "all",
+  "singleQuote": true
+}

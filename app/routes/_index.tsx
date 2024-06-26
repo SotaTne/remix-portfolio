@@ -1,11 +1,12 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
+import type { MetaFunction } from '@remix-run/cloudflare';
+import { Outlet } from '@remix-run/react';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
+    { title: 'New Remix App' },
     {
-      name: "description",
-      content: "Welcome to Remix on Cloudflare!",
+      name: 'description',
+      content: 'Welcome to Remix on Cloudflare!',
     },
   ];
 };
@@ -36,6 +37,7 @@ export default function Index() {
           </a>
         </li>
       </ul>
+      <Outlet />
     </div>
   );
 }
