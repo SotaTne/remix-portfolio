@@ -72,7 +72,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
         `/contact?UUID=${newUUID}`;
         return redirect(`/contact?UUID=${newUUID}`);
       } else {
-        return json({ UUID: 'failed redirect', ip: '' });
+        return json({ UUID: 'failed redirect', ip: clientIp });
       }
     } else {
       return json({ UUID: 'failed has and success', ip: '' });
