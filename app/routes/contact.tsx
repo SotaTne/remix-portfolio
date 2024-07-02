@@ -123,7 +123,7 @@ export default function Index() {
   const fields: Dict<string> = baseFields as Dict<string>;
 
   return (
-    <Suspense fallback={<Loading text="Loading" />}>
+    <Suspense fallback={<Loading text="Loading Now" />}>
       <Await resolve={UUID}>
         <section className="mx-auto flex h-screen w-full flex-col content-center items-center justify-center bg-white pt-[86px] md:flex-row md:justify-around">
           {validateUUID(UUID) && isIpAddress(ip) ? (
