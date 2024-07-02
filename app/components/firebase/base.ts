@@ -8,14 +8,7 @@ export default async function getDB(context: AppLoadContext) {
   const serviceAccountPath = env.WEB_FIREBASE_SERVICE_ACCOUNT;
 
   try {
-    const firebaseSecretBinary = Buffer.from(serviceAccountPath, 'base64');
-    const firebaseSecretString = firebaseSecretBinary.toString('utf8');
-
-    if (!isValidJSON(firebaseSecretString)) {
-      throw new Error('デコードされた文字列が有効なJSONではありません');
-    }
-
-    const firebaseSecret: FirebaseOptions = JSON.parse(firebaseSecretString);
+    const firebaseSecret: FirebaseOptions = JSON.parse(atob(serviceAccountPath));
 
     if (!firebaseSecret.apiKey || !firebaseSecret.authDomain || !firebaseSecret.projectId) {
       throw new Error(
@@ -31,14 +24,5 @@ export default async function getDB(context: AppLoadContext) {
       'FIREBASE_SERVICE_ACCOUNTのデコードまたはパース中にエラーが発生しました: ' +
         (error as Error).message,
     );
-  }
-}
-
-function isValidJSON(jsonString: string): boolean {
-  try {
-    JSON.parse(jsonString);
-    return true;
-  } catch (error) {
-    return false;
   }
 }
