@@ -4,5 +4,7 @@ node_modules
 /build
 .env
 .dev.vars
+.ssh/portfolio-ip-post-firebase-adminsdk-umnlz-fd511fae76.json
+.ssh/web-firebase-key.json
 
 .wrangler

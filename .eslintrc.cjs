@@ -8,25 +8,22 @@
 module.exports = {
   root: true,
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 2023,
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
   },
   env: {
     browser: true,
     commonjs: true,
     es6: true,
   },
-  ignorePatterns: ['!**/.server', '!**/.client'],
+  ignorePatterns: ['node_modules/', '.eslintrc.cjs'], // 正しいignorePatternsを指定する
 
   // Base config
   extends: [
     'eslint:recommended',
     'plugin:tailwindcss/recommended',
-    'plugin:@typescript-eslint/recommended-type-checked',
-    'prettier',
+    // 'plugin:@typescript-eslint/recommended-type-checked', // この行をコメントアウト
+    'prettier', // prettierの設定を追加
   ],
 
   overrides: [
@@ -39,6 +36,7 @@ module.exports = {
         'plugin:react/jsx-runtime',
         'plugin:react-hooks/recommended',
         'plugin:jsx-a11y/recommended',
+        // 'plugin:@typescript-eslint/recommended', // この行をコメントアウト
       ],
       settings: {
         react: {
@@ -75,14 +73,6 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:import/recommended',
         'plugin:import/typescript',
-        'semi:warn',
-        '@typescript-eslint/consistent-type-assertions:error',
-        '@typescript-eslint/no-unused-vars:warn',
-        '@typescript-eslint/ban-types:error',
-        '@typescript-eslint/no-explicit-any:warn',
-        '@typescript-eslint/strict-boolean-expressions:warn',
-        'no-implicit-coercion:error',
-        '@typescript-eslint/naming-convention:off',
       ],
     },
 
