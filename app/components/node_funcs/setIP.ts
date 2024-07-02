@@ -35,7 +35,7 @@ async function saveClientIP(
     return { success: (await setData(uuid, ip, context)).success, clientIp: 'ok' };
   } catch (error) {
     logError('Error setting IP', error);
-    return { success: false, clientIp: '' };
+    return { success: false, clientIp: 'Error setting IP' + error };
   }
 }
 

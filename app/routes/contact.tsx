@@ -68,7 +68,6 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
     const { clientIp, success } = getOnlyIP(request);
     if (success) {
       const { success } = await setIP(newUUID, clientIp, request, context);
-      ('do redirect');
       if (success) {
         `/contact?UUID=${newUUID}`;
         return redirect(`/contact?UUID=${newUUID}`);
