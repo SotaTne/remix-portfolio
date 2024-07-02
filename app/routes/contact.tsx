@@ -67,12 +67,14 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
     const newUUID = generateUUIDv4();
     const { clientIp, success } = getOnlyIP(request);
     if (success) {
-      const { success } = await setIP(newUUID, clientIp, request, context);
+      const data = await setIP(newUUID, clientIp, request, context);
+      const success = data.success;
+      const ClientIP = data.clientIp;
       if (success) {
         `/contact?UUID=${newUUID}`;
         return redirect(`/contact?UUID=${newUUID}`);
       } else {
-        return json({ UUID: 'failed redirect', ip: clientIp });
+        return json({ UUID: 'failed redirect', ip: ClientIP });
       }
     } else {
       return json({ UUID: 'failed has and success', ip: '' });
