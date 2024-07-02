@@ -61,7 +61,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
     if (ipResult.success) {
       return json({ UUID, ip: ipResult.clientIp });
     } else {
-      return json({ UUID: '', ip: '' });
+      return json({ UUID: 'failed success', ip: '' });
     }
   } else {
     const newUUID = generateUUIDv4();
@@ -73,10 +73,10 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
         `/contact?UUID=${newUUID}`;
         return redirect(`/contact?UUID=${newUUID}`);
       } else {
-        return json({ UUID: '', ip: '' });
+        return json({ UUID: 'failed redirect', ip: '' });
       }
     } else {
-      return json({ UUID: '', ip: '' });
+      return json({ UUID: 'failed has and success', ip: '' });
     }
   }
 };
@@ -121,6 +121,8 @@ export default function Index() {
   const fieldErrors: Dict<string> = baseFieldErrors as Dict<string>;
   const baseFields = actionData?.fields || { name: '', email: '', contents: '' };
   const fields: Dict<string> = baseFields as Dict<string>;
+  console.log('ip', ip);
+  console.log('UUID', UUID);
 
   return (
     <Suspense fallback={<Loading text="Loading Now" />}>
