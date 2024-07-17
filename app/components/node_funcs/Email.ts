@@ -5,7 +5,7 @@ import getMailData from '../firebase/getMail';
 export async function SendEMail(uuid: string, context: AppLoadContext) {
   const data = await getMailData(uuid, context);
   if (!data.success) {
-    console.error('Can not send Email');
+    console.error(`Can not send Email since ${data.message}`);
   }
   const mail = data.data.email;
   const name = data.data.name;

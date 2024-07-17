@@ -1,7 +1,7 @@
 import { AppLoadContext } from '@remix-run/cloudflare';
-import deleteIpData from '~/components/firebase/deleteData';
-import searchIpData from '~/components/firebase/search';
-import setData from '~/components/firebase/setEmail';
+import deleteIpData from '~/components/cloudflare-d1/deleteData';
+import searchIpData from '~/components/cloudflare-d1/search';
+import setData from '~/components/cloudflare-d1/setEmail';
 import { isIpAddress, validateEmail, validateUUID } from '~/components/funcs/matcher';
 import { escapeHTML } from '~/components/funcs/Translator';
 import { SendEMail } from '~/components/node_funcs/Email';
@@ -23,10 +23,14 @@ const validateInput = (
 ): boolean => {
   return (
     typeof name === 'string' &&
+    name.length > 0 &&
+    name.length <= 512 &&
     name.trim() !== '' &&
     typeof email === 'string' &&
     validateEmail(email) &&
     typeof contents === 'string' &&
+    contents.length > 0 &&
+    contents.length <= 4096 &&
     contents.trim() !== '' &&
     typeof uuid === 'string' &&
     validateUUID(uuid) &&
@@ -102,7 +106,11 @@ async function searchData(
 ): Promise<{ success: boolean; clientIp: string }> {
   let returnJson = { success: false, clientIp: '' };
   try {
-    returnJson = await searchIpData(uuid, context);
+    returnJson = (await searchIpData(uuid, context)) as {
+      success: boolean;
+      clientIp: string;
+      message?: string;
+    };
   } catch (error) {
     console.error('Error searching data:', error);
   }

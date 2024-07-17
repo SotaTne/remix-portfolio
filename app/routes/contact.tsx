@@ -1,4 +1,3 @@
-/*
 import {
   ActionFunctionArgs,
   json,
@@ -99,7 +98,12 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
         ? undefined
         : 'メールアドレスが長すぎます'
       : '無効なメールアドレスです',
-    contents: contents.length > 0 ? undefined : '内容は必須です',
+    contents:
+      contents.length > 0
+        ? contents.length <= 4096
+          ? undefined
+          : '内容が長すぎます'
+        : '内容は必須です',
   };
 
   if (Object.values(fieldErrors).some(Boolean)) {
@@ -190,7 +194,7 @@ export default function Index() {
     </Suspense>
   );
 }
-*/
+/*
 import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare';
 
 export const meta: MetaFunction = () => {
@@ -225,3 +229,4 @@ export default function Index() {
     </main>
   );
 }
+*/

@@ -1,4 +1,5 @@
 import { AppLoadContext } from '@remix-run/cloudflare';
+import { validateEmail } from '../funcs/matcher';
 import { getEnv } from '../node_funcs/getEnv';
 
 export async function sendMailToRecipient(
@@ -16,7 +17,16 @@ export async function sendMailToRecipient(
   if (!apiKey) {
     throw new Error('BREVO_API_KEY環境変数が設定されていません');
   }
-
+  if (name.length == 0 || name.length > 512) {
+    return Response.json({ success: false, message: 'name length not ok' });
+  }
+  if (message.length == 0 || message.length > 4096) {
+    return Response.json({ success: false, message: 'contents length not ok' });
+  }
+  if (!validateEmail(email)) {
+    // Simple email validation
+    return Response.json({ success: false, message: 'Invalid email address' });
+  }
   const content = {
     sender: {
       name: 'SotaTenPost',

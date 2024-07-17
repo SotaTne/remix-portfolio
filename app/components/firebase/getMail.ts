@@ -2,7 +2,7 @@ import { AppLoadContext } from '@remix-run/cloudflare';
 import { doc, getDoc } from 'firebase/firestore';
 import getDB from './base';
 
-type SearchDataResponse = { success: boolean; data: MainDataType };
+type SearchDataResponse = { success: boolean; data: MainDataType; message?: string };
 type MainDataType = { name: string; email: string; contents: string };
 
 const getMailData = async (uuid: string, context: AppLoadContext): Promise<SearchDataResponse> => {

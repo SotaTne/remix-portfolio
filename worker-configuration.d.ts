@@ -2,6 +2,7 @@
 // by running `wrangler types`
 
 interface Env {
+  DB: D1Database;
   SEND_EMAIL_ADDRESS: string;
   MAIL_APP_PASS: string;
   RECEIVE_ADDRESS: string;

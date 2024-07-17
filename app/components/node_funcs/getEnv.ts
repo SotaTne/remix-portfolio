@@ -10,7 +10,8 @@ export const getEnv = async (context: AppLoadContext) => {
       env.MAIL_APP_PASS &&
       env.RECEIVE_ADDRESS &&
       env.WEB_FIREBASE_SERVICE_ACCOUNT &&
-      env.SEND_EMAIL_ADDRESS
+      env.SEND_EMAIL_ADDRESS &&
+      env.DB
     )
   ) {
     throw new Error('SUPABASE_URL or SUPABASE_ANON_KEY is not defined');
