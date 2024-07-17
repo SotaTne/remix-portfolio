@@ -19,7 +19,7 @@ const setEmailData = async (
       return { success: false, message: 'All fields are required' };
     }
 
-    if (name.length == 0 || name.length > 512) {
+    if (name.length == 0 || name.length > 64) {
       return { success: false, message: 'name length not ok' };
     }
     if (contents.length == 0 || contents.length > 4096) {

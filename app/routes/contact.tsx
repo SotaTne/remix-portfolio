@@ -8,7 +8,7 @@ import {
 } from '@remix-run/cloudflare';
 import { Await, Form, useActionData, useLoaderData } from '@remix-run/react';
 import { Suspense, useState } from 'react';
-import { isIpAddress, validateEmail, validateUUID } from '~/components/funcs/matcher';
+import { validateEmail } from '~/components/funcs/matcher';
 import { escapeHTML } from '~/components/funcs/Translator';
 import { generateUUIDv4 } from '~/components/funcs/uuid';
 import Loading from '~/components/Loading';
@@ -127,68 +127,74 @@ export default function Index() {
   const fieldErrors: Dict<string> = baseFieldErrors as Dict<string>;
   const baseFields = actionData?.fields || { name: '', email: '', contents: '' };
   const fields: Dict<string> = baseFields as Dict<string>;
-  console.log('ip', ip);
-  console.log('UUID', UUID);
 
   return (
     <Suspense fallback={<Loading text="Loading Now" />}>
       <Await resolve={UUID}>
         <section className="mx-auto flex h-screen w-full flex-col content-center items-center justify-center bg-white pt-[86px] md:flex-row md:justify-around">
-          {validateUUID(UUID) && isIpAddress(ip) ? (
-            <Form
-              onSubmit={async () => {
-                setSending(true);
-              }}
-              method="post"
-              noValidate
-              className="w-full max-w-lg rounded-lg bg-white p-8 shadow-md"
-            >
-              <input type="hidden" name="UUID" value={UUID} />
-              <input type="hidden" name="ip" value={ip} />
-              {inputFields.map(({ type, name, placeholder }) => (
-                <div key={name} className="mb-4">
-                  <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor={name}>
-                    {placeholder}
-                  </label>
-                  <input
-                    type={type}
-                    name={name}
-                    placeholder={placeholder}
-                    defaultValue={getDictOrDefault(fields, name, '')}
-                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                  />
-
-                  <p className="text-xs italic text-red-500">
-                    {getDictOrDefault(fieldErrors, name, '')}
-                  </p>
-                </div>
-              ))}
-              <div className="mb-4">
-                <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="contents">
-                  お問い合わせ内容
+          <Form
+            onSubmit={async (event) => {
+              const form = event.currentTarget;
+              const formData = new FormData(form);
+              const name = formData.get('name') as string;
+              const email = formData.get('email') as string;
+              const contents = formData.get('contents') as string;
+              const sendingBool =
+                validateEmail(email) &&
+                email.length <= 512 &&
+                name.length > 0 &&
+                name.length <= 64 &&
+                contents.length > 0 &&
+                contents.length <= 4096;
+              setSending(sendingBool);
+            }}
+            method="post"
+            noValidate
+            className="w-full max-w-lg rounded-lg bg-white p-8 shadow-md"
+          >
+            <input type="hidden" name="UUID" value={UUID} />
+            <input type="hidden" name="ip" value={ip} />
+            {inputFields.map(({ type, name, placeholder }) => (
+              <div key={name} className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor={name}>
+                  {placeholder}
                 </label>
-                <textarea
-                  name="contents"
-                  placeholder="お問い合わせ内容"
-                  rows={5}
-                  defaultValue={fields.contents}
+                <input
+                  type={type}
+                  name={name}
+                  placeholder={placeholder}
+                  defaultValue={getDictOrDefault(fields, name, '')}
                   className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 />
-                <p className="text-xs italic text-red-500">{fieldErrors.contents}</p>
+
+                <p className="text-xs italic text-red-500">
+                  {getDictOrDefault(fieldErrors, name, '')}
+                </p>
               </div>
-              <div className="flex items-center justify-between">
-                <button
-                  type="submit"
-                  disabled={sending}
-                  className={`focus:shadow-outline rounded ${sending ? 'bg-gray-400' : 'bg-purple-500'} px-4 py-2 font-bold text-white ${sending ? '' : 'hover:bg-purple-700'} focus:outline-none `}
-                >
-                  送信
-                </button>
-              </div>
-            </Form>
-          ) : (
-            <Loading text="Loading" />
-          )}
+            ))}
+            <div className="mb-4">
+              <label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="contents">
+                お問い合わせ内容
+              </label>
+              <textarea
+                name="contents"
+                placeholder="お問い合わせ内容"
+                rows={5}
+                defaultValue={fields.contents}
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+              />
+              <p className="text-xs italic text-red-500">{fieldErrors.contents}</p>
+            </div>
+            <div className="flex items-center justify-between">
+              <button
+                type="submit"
+                disabled={sending}
+                className={`focus:shadow-outline rounded ${sending ? 'bg-gray-400' : 'bg-purple-500'} px-4 py-2 font-bold text-white ${sending ? '' : 'hover:bg-purple-700'} focus:outline-none `}
+              >
+                送信
+              </button>
+            </div>
+          </Form>
         </section>
       </Await>
     </Suspense>

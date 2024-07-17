@@ -24,7 +24,7 @@ const validateInput = (
   return (
     typeof name === 'string' &&
     name.length > 0 &&
-    name.length <= 512 &&
+    name.length <= 64 &&
     name.trim() !== '' &&
     typeof email === 'string' &&
     validateEmail(email) &&
