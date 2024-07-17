@@ -1,5 +1,5 @@
 import { AppLoadContext } from '@remix-run/cloudflare';
-import searchIpData from '~/components/firebase/search';
+import searchIpData from '~/components/cloudflare-d1/search';
 import { isIpAddress, validateUUID } from '~/components/funcs/matcher';
 import { isOriginMatching } from './pathMatch';
 
@@ -35,7 +35,11 @@ async function searchData(
 ): Promise<{ success: boolean; clientIp: string }> {
   let returnJson = { success: false, clientIp: '' };
   try {
-    returnJson = await searchIpData(uuid, context);
+    returnJson = (await searchIpData(uuid, context)) as {
+      success: boolean;
+      clientIp: string;
+      message?: string;
+    };
   } catch (error) {
     console.error('Error fetching data:', error);
   }

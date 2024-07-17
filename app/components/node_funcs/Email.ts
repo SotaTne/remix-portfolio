@@ -1,6 +1,6 @@
 import { AppLoadContext } from '@remix-run/cloudflare';
 import { sendMailToRecipient } from '~/components/brevo/brevoMail';
-import getMailData from '../firebase/getMail';
+import getMailData from '~/components/cloudflare-d1/getMail';
 
 export async function SendEMail(uuid: string, context: AppLoadContext) {
   const data = await getMailData(uuid, context);

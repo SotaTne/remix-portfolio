@@ -1,5 +1,5 @@
 import { AppLoadContext } from '@remix-run/cloudflare';
-import setData from '~/components/firebase/setIP';
+import setData from '~/components/cloudflare-d1/setIP';
 import { isIpAddress, validateUUID } from '~/components/funcs/matcher';
 import getClientIp from '~/components/node_funcs/GetClientIP';
 import { isOriginMatching } from './pathMatch';

@@ -16,7 +16,7 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
-  ignorePatterns: ['node_modules/', '.eslintrc.cjs'], // 正しいignorePatternsを指定する
+  ignorePatterns: ['node_modules/', '.eslintrc.cjs', 'build/'], // 正しいignorePatternsを指定する
 
   // Base config
   extends: [
