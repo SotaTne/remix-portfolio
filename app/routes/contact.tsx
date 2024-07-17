@@ -164,6 +164,7 @@ export default function Index() {
                   name={name}
                   placeholder={placeholder}
                   defaultValue={getDictOrDefault(fields, name, '')}
+                  // eslint-disable-next-line tailwindcss/no-custom-classname
                   className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 />
 
@@ -181,6 +182,7 @@ export default function Index() {
                 placeholder="お問い合わせ内容"
                 rows={5}
                 defaultValue={fields.contents}
+                // eslint-disable-next-line tailwindcss/no-custom-classname
                 className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               />
               <p className="text-xs italic text-red-500">{fieldErrors.contents}</p>
@@ -189,6 +191,7 @@ export default function Index() {
               <button
                 type="submit"
                 disabled={sending}
+                // eslint-disable-next-line tailwindcss/no-custom-classname
                 className={`focus:shadow-outline rounded ${sending ? 'bg-gray-400' : 'bg-purple-500'} px-4 py-2 font-bold text-white ${sending ? '' : 'hover:bg-purple-700'} focus:outline-none `}
               >
                 送信
